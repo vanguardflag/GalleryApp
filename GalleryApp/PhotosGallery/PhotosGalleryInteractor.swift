@@ -71,7 +71,7 @@ class PhotosGalleryInteractor: PhotoGalleryBussinesLogic {
                 self?.totalpage = result.pages ?? 0
                 self?.getPhotoUrl(photoList: photos)
             case .failure(let error):
-                print(error.localizedDescription)
+                self?.presenter.displayPhotos(with: .init(result: .failure(.loadingFailed)))
                 
             }
         }

@@ -21,4 +21,7 @@ class PhotoURLServiceFake: PhotoURLServiceProtocol {
     }
     
     
+    func configure(result:Result<[PhotoURLResultModel], Error>){
+        self.result = result
+    }
 }

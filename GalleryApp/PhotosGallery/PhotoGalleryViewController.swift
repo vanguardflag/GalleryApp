@@ -170,6 +170,8 @@ extension PhotoGalleryViewController: UIScrollViewDelegate {
         let distance = scrollView.contentSize.height - (targetContentOffset.pointee.y + scrollView.bounds.height)
         if !isLoading,interactor.canFetchMorePhotos, distance < 200 {
             interactor.getPhotos(textSearch: "", isloadingMore: true)
+            isLoading = true
+            
         }
     }
 }

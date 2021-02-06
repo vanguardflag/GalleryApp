@@ -19,5 +19,10 @@ class PhotosServiceFake: PhotosServiceProtocol {
     func searchPhoto(name: String, page: Int, then handler: @escaping (Result<ResultModel, Error>) -> Void) {
         handler(result)
     }
+    
+    
+    func configure(result:Result<ResultModel, Error>){
+        self.result = result
+    }
 
 }

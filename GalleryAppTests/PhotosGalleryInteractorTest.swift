@@ -11,11 +11,11 @@ import XCTest
 import GalleryApp
 
 class PhotosGalleryInteractorTest: XCTestCase {
-    
-    var sut:PhotosGalleryInteractor!
-    var fakePresenter:PhotoGalleryPresenterMock!
-    var fakePhotoService:PhotosServiceFake!
-    var fakePhotoURL:PhotoURLServiceFake!
+    private let bundle = Bundle(for: ResponseModelTests.self)
+    private var sut:PhotosGalleryInteractor!
+    private var fakePresenter:PhotoGalleryPresenterMock!
+    private var fakePhotoService:PhotosServiceFake!
+    private var fakePhotoURL:PhotoURLServiceFake!
     
     override func setUpWithError() throws {
         fakePhotoService = PhotosServiceFake(result: .success(ResultModel.init()))
@@ -27,13 +27,32 @@ class PhotosGalleryInteractorTest: XCTestCase {
     }
 
 
-    func testGetPhotos() {
+    func testGetPhotosProblem() {
         
         sut.getPhotos(textSearch: "", isloadingMore: false)
         XCTAssert(fakePresenter.hasCallDisplayPhotos)
     }
 
  
+    func testGetPhotoWithData(){
+        let sutData: ResultModel = bundle.decodeFile(name: "photolist")!
+        fakePhotoService.configure(result: .success(sutData))
+    
+        sut.getPhotos(textSearch: "", isloadingMore: false)
+        
+        XCTAssert(fakePresenter.hasCallDisplayPhotos)
+        
+    }
+    
+    
+    func testGetPhotoWithError(){
+        fakePhotoService.configure(result: .failure(AppError.noData))
+    
+        sut.getPhotos(textSearch: "", isloadingMore: false)
+        
+        XCTAssert(fakePresenter.hasCallDisplayPhotos)
+        
+    }
     
     
 
