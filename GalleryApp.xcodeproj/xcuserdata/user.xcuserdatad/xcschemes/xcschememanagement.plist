@@ -7,7 +7,20 @@
 		<key>GalleryApp.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>0</integer>
+			<integer>3</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>CE6B44D525CDE2C100AE3AC0</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>CE82EB7B25CAD7A60011870D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
 		</dict>
 	</dict>
 </dict>
