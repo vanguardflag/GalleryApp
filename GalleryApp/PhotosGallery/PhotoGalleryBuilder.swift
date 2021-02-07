@@ -13,11 +13,7 @@ protocol ModuleBuilder {
     func build() -> Module
 }
 
-public final class PhotoGalleryBuilder:ModuleBuilder{
-
-    
-    
-    
+public final class PhotoGalleryBuilder: ModuleBuilder{
     func build() -> some UIViewController {
         let presenter = PhotosGalleryPresenter()
         let interactor = PhotosGalleryInteractor(presenter: presenter)
@@ -25,7 +21,4 @@ public final class PhotoGalleryBuilder:ModuleBuilder{
         presenter.viewController = viewController
         return viewController
     }
-    
-
-    
 }

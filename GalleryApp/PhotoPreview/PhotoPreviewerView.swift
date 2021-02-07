@@ -7,12 +7,12 @@
 
 import Foundation
 import UIKit
+import Kingfisher
 
 
 class PhotoPreviewerView: UIView {
     public var closeButtonAction: (() -> Void)?
-    
-    
+
     private(set) lazy var closeButton:UIButton = {
         let button = UIButton()
         button.backgroundColor = .white
@@ -22,7 +22,6 @@ class PhotoPreviewerView: UIView {
         return button
     }()
     
-
     private lazy var imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
@@ -60,14 +59,18 @@ class PhotoPreviewerView: UIView {
         }
 
     }
-    
 
     public func configure(imageURL:URL){
         let placeholderImage = UIImage(named: "placeHolder")
-        imageView.kf.setImage(
-            with: imageURL,
-            placeholder: placeholderImage)
-
+        let resource = ImageResource(downloadURL: imageURL)
+        KingfisherManager.shared.retrieveImage(with: resource) { result in
+            switch result{
+            case .success(let image):
+                self.imageView.image = image.image
+            case .failure(_):
+                self.imageView.image = placeholderImage
+            }
+        }
     }
     
     @objc func closeView(){

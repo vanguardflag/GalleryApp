@@ -19,7 +19,7 @@ enum FetchPhoto {
     }
 
     public enum PresentResult {
-        case content([PhotoURLResultModel])
+        case content([PhotoViewModel])
         case empty
         case error(ErrorType)
     }

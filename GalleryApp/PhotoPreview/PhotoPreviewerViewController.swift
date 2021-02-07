@@ -13,7 +13,14 @@ class PhotoPreviewerViewController:UIViewController{
     //MARK: Properties
     let imageURL:URL
   
-    lazy var contentView = PhotoPreviewerView(frame: UIScreen.main.bounds)
+    lazy var contentView: PhotoPreviewerView = {
+        let view = PhotoPreviewerView(frame: UIScreen.main.bounds)
+        view.closeButtonAction = {[weak self] in
+            self?.dismiss(animated: true, completion: nil)
+        }
+        view.configure(imageURL: imageURL)
+        return view
+    }()
 
     //MARK: - Initial ViewCOntroller
     init(
@@ -31,10 +38,6 @@ class PhotoPreviewerViewController:UIViewController{
     
     override func loadView() {
         view = contentView
-        contentView.closeButtonAction = {
-            self.dismiss(animated: true, completion: nil)
-        }
-        contentView.configure(imageURL: imageURL)
         // make additional setup of view or save references to subviews
     }
     

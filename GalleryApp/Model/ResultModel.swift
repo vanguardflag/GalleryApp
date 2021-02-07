@@ -17,5 +17,17 @@ struct PhotoResultModel:Decodable {
     var pages: Int?
     var perpage: Int?
     var total: String?
-    var photo: [PhotosModel]?
+    var photo: [PhotoInfoModel]?
+}
+
+struct PhotoInfoModel:Decodable {
+    var id: String?
+    var owner: String?
+    var secret: String?
+    var server: String?
+    var farm: Int?
+    var title: String?
+    var ispublic: Int?
+    var isfriend: Int?
+    var isfamily: Int?
 }

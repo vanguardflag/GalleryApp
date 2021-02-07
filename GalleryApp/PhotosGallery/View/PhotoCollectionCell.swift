@@ -10,7 +10,7 @@ import UIKit
 import Kingfisher
 
 class PhotoCollectionCell: UICollectionViewCell {
-     static let identifier = "photoCellIdentifier"
+    static let identifier = "photoCellIdentifier"
     private lazy var imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
@@ -18,11 +18,10 @@ class PhotoCollectionCell: UICollectionViewCell {
         return imageView
     }()
 
-    
     override func prepareForReuse() {
         imageView.image = nil
     }
-    override init(frame: CGRect = CGRect.zero) {
+    private override init(frame: CGRect = CGRect.zero) {
         super.init(frame: frame)
         commonInit()
     }
@@ -31,16 +30,16 @@ class PhotoCollectionCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func commonInit() {
+    private func commonInit() {
         addSubviews()
         makeConstraints()
     }
 
-    func addSubviews() {
+    private func addSubviews() {
         contentView.addSubview(imageView)
     }
 
-    func makeConstraints() {
+    private func makeConstraints() {
         imageView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
@@ -49,8 +48,18 @@ class PhotoCollectionCell: UICollectionViewCell {
     
     func configureImage(with url: URL?) {
         let placeholderImage = UIImage(named: "placeHolder")
-        imageView.kf.setImage(
-            with: url,
-            placeholder: placeholderImage)
+        guard let url = url else {
+            imageView.image = placeholderImage
+            return
+        }
+        let resource = ImageResource(downloadURL: url)
+        KingfisherManager.shared.retrieveImage(with: resource) { result in
+            switch result{
+            case .success(let image):
+                self.imageView.image = image.image
+            case .failure(_):
+                self.imageView.image = placeholderImage
+            }
+        }
     }
 }

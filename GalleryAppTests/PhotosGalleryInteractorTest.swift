@@ -15,15 +15,12 @@ class PhotosGalleryInteractorTest: XCTestCase {
     private var sut:PhotosGalleryInteractor!
     private var fakePresenter:PhotoGalleryPresenterMock!
     private var fakePhotoService:PhotosServiceFake!
-    private var fakePhotoURL:PhotoURLServiceFake!
     
     override func setUpWithError() throws {
-        fakePhotoService = PhotosServiceFake(result: .success(ResultModel.init()))
-        fakePhotoURL = PhotoURLServiceFake(result: .success([]))
+        fakePhotoService = PhotosServiceFake(result: .success(ResultModel.init()),resultURL: .success([]))
         fakePresenter = PhotoGalleryPresenterMock()
         sut = PhotosGalleryInteractor(presenter: fakePresenter,
-                                      service: fakePhotoService,
-                                      photoURLService: fakePhotoURL)
+                                      service: fakePhotoService)
     }
 
 

@@ -11,15 +11,18 @@ protocol PhotoGalleryDisplayLogic: AnyObject {
     func displayPhotos(result: FetchPhoto.PresentResult)
 }
 
+
 class PhotoGalleryViewController: UIViewController {
     //MARK: Properties
-    var interactor: PhotoGalleryBussinesLogic
-    var photos: [PhotoURLResultModel] = []
+    private var interactor: PhotoGalleryBussinesLogic
     private let sectionInsets = UIEdgeInsets(top: 50.0, left: 20.0, bottom: 50.0, right: 20.0)
     private let itemsPerRow: CGFloat = 2
-    lazy var contentView = PhotoGalleryView(frame: UIScreen.main.bounds)
-    let searchbarView = UISearchBar()
-    var isLoading:Bool = false
+    private var contentView = PhotoGalleryView(frame: UIScreen.main.bounds)
+    private let searchbarView = UISearchBar()
+    private var isLoading:Bool = false
+    private let distanceUntileEndForLoadingMore: CGFloat = 200
+    private let photoGalleryDataSource: PhotoGalleryDataSource = PhotoGalleryDataSource()
+    
     //MARK: - Initial ViewCOntroller
     init(
         interactor: PhotoGalleryBussinesLogic
@@ -46,7 +49,7 @@ class PhotoGalleryViewController: UIViewController {
     }
     //MARK: - Private Func
     private func setupCollectionView() {
-        contentView.collectionView.dataSource = self
+        contentView.collectionView.dataSource = photoGalleryDataSource
         contentView.collectionView.delegate = self
         contentView.collectionView.register(PhotoCollectionCell.self, forCellWithReuseIdentifier: PhotoCollectionCell.identifier)
     }
@@ -65,8 +68,8 @@ class PhotoGalleryViewController: UIViewController {
         self.present(alert, animated: true)
     }
     
-    private func handleViewWithData(_ photos: ([PhotoURLResultModel])) {
-        self.photos.append(contentsOf: photos)
+    private func handleViewWithData(_ photos: ([PhotoViewModel])) {
+        photoGalleryDataSource.configure(photos: photos)
         DispatchQueue.main.async {
             self.contentView.configureView(hasData: true, isError: false)
             self.contentView.stopLoading()
@@ -79,85 +82,49 @@ class PhotoGalleryViewController: UIViewController {
             self.contentView.configureView(hasData: false, isError: isError)
         }
     }
-    
 }
 
-
-//MARK: - CollectionView Delegation
-extension PhotoGalleryViewController:UICollectionViewDelegate{
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
-    }
-}
-
-
-extension PhotoGalleryViewController:UICollectionViewDataSource{
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return photos.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: PhotoCollectionCell.identifier,
-            for: indexPath
-        ) as! PhotoCollectionCell
-        cell.configureImage(
-            with: URL(string: photos[indexPath.row]
-                        .size?.first(where: {
-                            $0.label == ImageSize.largeSquare.rawValue
-                        })?.source ?? ""))
-        cell.backgroundColor = .white
-        return cell
-    }
-    
-    
+// MARK: - Collection View Flow Layout Delegate
+extension PhotoGalleryViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let url = URL(string: photos[indexPath.row]
-                            .size?.first(where: {
-                                $0.label == ImageSize.large.rawValue
-                            })?.source ?? "") else{
+        guard let url = photoGalleryDataSource.getDetailURL(for: indexPath.row) else{
             showAlert()
             return
         }
         let vc = PhotoPreviewerViewController(imageURL: url)
         self.present(vc, animated: true, completion: nil)
     }
-}
-
-
-// MARK: - Collection View Flow Layout Delegate
-extension PhotoGalleryViewController: UICollectionViewDelegateFlowLayout {
-  
-  func collectionView(
-    _ collectionView: UICollectionView,
-    layout collectionViewLayout: UICollectionViewLayout,
-    sizeForItemAt indexPath: IndexPath
-  ) -> CGSize {
     
-    let paddingSpace = sectionInsets.left * (itemsPerRow + 1)
-    let availableWidth = view.frame.width - paddingSpace
-    let widthPerItem = availableWidth / itemsPerRow
-
-    return CGSize(width: widthPerItem, height: widthPerItem)
-  }
-
-  
-  func collectionView(
-    _ collectionView: UICollectionView,
-    layout collectionViewLayout: UICollectionViewLayout,
-    insetForSectionAt section: Int
-  ) -> UIEdgeInsets {
-    return sectionInsets
-  }
-
-  func collectionView(
-    _ collectionView: UICollectionView,
-    layout collectionViewLayout: UICollectionViewLayout,
-    minimumLineSpacingForSectionAt section: Int
-  ) -> CGFloat {
-    return sectionInsets.left
-  }
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        sizeForItemAt indexPath: IndexPath
+    ) -> CGSize {
+        
+        let paddingSpace = sectionInsets.left * (itemsPerRow + 1)
+        let availableWidth = view.frame.width - paddingSpace
+        let widthPerItem = availableWidth / itemsPerRow
+        
+        return CGSize(width: widthPerItem, height: widthPerItem)
+    }
+    
+    
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        insetForSectionAt section: Int
+    ) -> UIEdgeInsets {
+        return sectionInsets
+    }
+    
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        minimumLineSpacingForSectionAt section: Int
+    ) -> CGFloat {
+        return sectionInsets.left
+    }
 }
 
 
@@ -168,7 +135,7 @@ extension PhotoGalleryViewController: UIScrollViewDelegate {
         targetContentOffset: UnsafeMutablePointer<CGPoint>
     ) {
         let distance = scrollView.contentSize.height - (targetContentOffset.pointee.y + scrollView.bounds.height)
-        if !isLoading,interactor.canFetchMorePhotos, distance < 200 {
+        if !isLoading,interactor.canFetchMorePhotos, distance < distanceUntileEndForLoadingMore {
             interactor.getPhotos(textSearch: "", isloadingMore: true)
             isLoading = true
             
@@ -194,13 +161,13 @@ extension PhotoGalleryViewController:PhotoGalleryDisplayLogic{
 
 // MARK: - Searchbar Delegation
 extension PhotoGalleryViewController:UISearchBarDelegate{
-    
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let text = searchBar.text else {
             return
         }
         self.searchbarView.endEditing(true)
-        photos = []
+        self.contentView.collectionView.reloadData()
+        photoGalleryDataSource.reset()
         contentView.startLoading()
         interactor.getPhotos(textSearch: text, isloadingMore: false)
         isLoading = true        
