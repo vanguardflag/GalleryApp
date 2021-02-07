@@ -12,11 +12,10 @@ public protocol PhotoGalleryBussinesLogic:AnyObject{
     func getPhotos(textSearch:String,isloadingMore:Bool)
 }
 
-
 class PhotosGalleryInteractor: PhotoGalleryBussinesLogic {
     //MARK:  Properties
-    let presenter: PhotosGalleryPresentationLogic
-    let service: PhotosServiceProtocol
+    private let presenter: PhotosGalleryPresentationLogic
+    private let service: PhotosServiceProtocol
     private var currentPage: Int = 1
     private var pageSize: Int = 0
     private var totalpage: Int = 0
@@ -27,12 +26,10 @@ class PhotosGalleryInteractor: PhotoGalleryBussinesLogic {
         self.service = service
         self.presenter = presenter
     }
-    
-    
-    
+
     //MARK: Logic
     var canFetchMorePhotos: Bool{
-        return currentPage > totalpage
+        return currentPage < totalpage
     }
 
     func getPhotos(textSearch:String = "", isloadingMore:Bool = false) {

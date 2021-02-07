@@ -36,8 +36,9 @@ class PhotosGalleryInteractorTest: XCTestCase {
         fakePhotoService.configure(result: .success(sutData))
     
         sut.getPhotos(textSearch: "", isloadingMore: false)
-        
-        XCTAssert(fakePresenter.hasCallDisplayPhotos)
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1) {
+            XCTAssert(self.fakePresenter.hasCallDisplayPhotos)
+        }
         
     }
     
@@ -50,7 +51,45 @@ class PhotosGalleryInteractorTest: XCTestCase {
         XCTAssert(fakePresenter.hasCallDisplayPhotos)
         
     }
+    func testGetPhotoWithEmpty(){
+        let sutData: ResultModel = bundle.decodeFile(name: "photolistempty")!
+        fakePhotoService.configure(result: .success(sutData))
+    
+        sut.getPhotos(textSearch: "", isloadingMore: false)
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1) {
+            XCTAssert(self.fakePresenter.hasCallDisplayPhotos)
+        }
+            
+    }
+    
+    func testCanFetchData(){
+        let sutData: ResultModel = bundle.decodeFile(name: "photolist")!
+        fakePhotoService.configure(result: .success(sutData))
+    
+        sut.getPhotos(textSearch: "", isloadingMore: false)
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1) {
+            XCTAssert(self.fakePresenter.hasCallDisplayPhotos)
+        }
+        
+        XCTAssertTrue(sut.canFetchMorePhotos == true)
+        
+    }
     
     
+    
+    
+    func testCanNotFetchData(){
+        let sutData: ResultModel = bundle.decodeFile(name: "photolistlastpage")!
+        fakePhotoService.configure(result: .success(sutData))
+    
+        sut.getPhotos(textSearch: "", isloadingMore: false)
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1) {
+            XCTAssert(self.fakePresenter.hasCallDisplayPhotos)
+        }
+        
+        XCTAssertTrue(sut.canFetchMorePhotos == false)
+        
+    }
 
+ 
 }

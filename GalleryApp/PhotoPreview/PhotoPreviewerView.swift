@@ -37,18 +37,18 @@ class PhotoPreviewerView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func commonInit() {
+    private func commonInit() {
         backgroundColor = UIColor.gray.withAlphaComponent(0.7)
         addSubviews()
         makeConstraints()
     }
 
-    func addSubviews() {
+    private func addSubviews() {
         addSubview(imageView)
         addSubview(closeButton)
     }
 
-    func makeConstraints() {
+    private func makeConstraints() {
         imageView.snp.makeConstraints { make in
             make.leading.trailing.bottom.top.equalToSuperview().inset(10)
         }
