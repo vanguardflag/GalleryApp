@@ -10,5 +10,4 @@ import Foundation
 enum AppError: Error {
     case noData
     case requestError
-    case noResults
 }

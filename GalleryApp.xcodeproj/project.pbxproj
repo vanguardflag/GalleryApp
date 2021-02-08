@@ -10,7 +10,6 @@
 		3D50DCA07CC4806F832F2FA1 /* Pods_GalleryApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 601879445A01395100260DD9 /* Pods_GalleryApp.framework */; };
 		CE6B44C925CD955700AE3AC0 /* PhotoPreviewerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6B44C825CD955700AE3AC0 /* PhotoPreviewerView.swift */; };
 		CE6B44CC25CDAE2900AE3AC0 /* PhotoGalleryDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6B44CB25CDAE2900AE3AC0 /* PhotoGalleryDataFlow.swift */; };
-		CE6B44D925CDE2C100AE3AC0 /* GalleryAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6B44D825CDE2C100AE3AC0 /* GalleryAppTests.swift */; };
 		CE6B44E725CDEB2600AE3AC0 /* photolistempty.json in Resources */ = {isa = PBXBuildFile; fileRef = CE6B44E325CDEB2600AE3AC0 /* photolistempty.json */; };
 		CE6B44E825CDEB2600AE3AC0 /* photolistlastpage.json in Resources */ = {isa = PBXBuildFile; fileRef = CE6B44E425CDEB2600AE3AC0 /* photolistlastpage.json */; };
 		CE6B44EA25CDEB2600AE3AC0 /* photolist.json in Resources */ = {isa = PBXBuildFile; fileRef = CE6B44E625CDEB2600AE3AC0 /* photolist.json */; };
@@ -58,7 +57,6 @@
 		CE6B44C825CD955700AE3AC0 /* PhotoPreviewerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPreviewerView.swift; sourceTree = "<group>"; };
 		CE6B44CB25CDAE2900AE3AC0 /* PhotoGalleryDataFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoGalleryDataFlow.swift; sourceTree = "<group>"; };
 		CE6B44D625CDE2C100AE3AC0 /* GalleryAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GalleryAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		CE6B44D825CDE2C100AE3AC0 /* GalleryAppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryAppTests.swift; sourceTree = "<group>"; };
 		CE6B44DA25CDE2C100AE3AC0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CE6B44E325CDEB2600AE3AC0 /* photolistempty.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = photolistempty.json; sourceTree = "<group>"; };
 		CE6B44E425CDEB2600AE3AC0 /* photolistlastpage.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = photolistlastpage.json; sourceTree = "<group>"; };
@@ -125,7 +123,6 @@
 				CE6B450D25CEA65E00AE3AC0 /* Extension */,
 				CE6B44F925CDFEF500AE3AC0 /* FakeObject */,
 				CE6B44E225CDE77300AE3AC0 /* Json */,
-				CE6B44D825CDE2C100AE3AC0 /* GalleryAppTests.swift */,
 				CE6B44DA25CDE2C100AE3AC0 /* Info.plist */,
 				CE6B44F525CDFD5200AE3AC0 /* PhotosGalleryInteractorTest.swift */,
 				CE6B451C25CEA8E600AE3AC0 /* ResponseModelTests.swift */,
@@ -415,7 +412,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				CE6B44F625CDFD5200AE3AC0 /* PhotosGalleryInteractorTest.swift in Sources */,
-				CE6B44D925CDE2C100AE3AC0 /* GalleryAppTests.swift in Sources */,
 				CE6B44FB25CDFF2700AE3AC0 /* PhotoGalleryPresenterMock.swift in Sources */,
 				CE6B450325CE00DC00AE3AC0 /* PhotosServiceFake.swift in Sources */,
 				CE6B450F25CEA67B00AE3AC0 /* BundleExtension.swift in Sources */,

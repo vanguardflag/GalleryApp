@@ -13,7 +13,7 @@ import Kingfisher
 class PhotoPreviewerView: UIView {
     public var closeButtonAction: (() -> Void)?
 
-    private(set) lazy var closeButton:UIButton = {
+    private(set) lazy var closeButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = .white
         button.layer.cornerRadius = 10
@@ -60,7 +60,7 @@ class PhotoPreviewerView: UIView {
 
     }
 
-    public func configure(imageURL:URL){
+    public func configure(imageURL: URL){
         let placeholderImage = UIImage(named: "placeHolder")
         let resource = ImageResource(downloadURL: imageURL)
         KingfisherManager.shared.retrieveImage(with: resource) { result in

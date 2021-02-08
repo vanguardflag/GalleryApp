@@ -7,9 +7,9 @@
 
 import Foundation
 
-public protocol PhotoGalleryBussinesLogic:AnyObject{
+public protocol PhotoGalleryBussinesLogic: AnyObject{
     var canFetchMorePhotos: Bool { get }
-    func getPhotos(textSearch:String,isloadingMore:Bool)
+    func getPhotos(textSearch: String,isloadingMore: Bool)
 }
 
 class PhotosGalleryInteractor: PhotoGalleryBussinesLogic {
@@ -32,7 +32,7 @@ class PhotosGalleryInteractor: PhotoGalleryBussinesLogic {
         return currentPage < totalpage
     }
 
-    func getPhotos(textSearch:String = "", isloadingMore:Bool = false) {
+    func getPhotos(textSearch: String = "", isloadingMore: Bool = false) {
         if isloadingMore{
             loadPhotos(textSearch: self.textSearch)
         } else {

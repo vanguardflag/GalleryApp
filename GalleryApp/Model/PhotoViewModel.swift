@@ -9,6 +9,6 @@ import Foundation
 
 
 struct PhotoViewModel {
-    let detailUrl:URL?
-    let listUrl:URL
+    let detailUrl: URL?
+    let listUrl: URL
 }

@@ -8,7 +8,7 @@
 import Foundation
 
 
-enum ImageSize:String{
+enum ImageSize: String{
     case large = "Large"
     case largeSquare = "Large Square"
 

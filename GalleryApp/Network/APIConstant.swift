@@ -28,7 +28,7 @@ struct APIConstant {
     
 }
 
-enum method:String {
+enum Method: String {
     case getSize = "flickr.photos.getSizes"
     case searchPhoto = "flickr.photos.search"
 }

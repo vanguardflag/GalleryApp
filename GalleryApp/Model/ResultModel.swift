@@ -9,10 +9,10 @@ import Foundation
 
 
 struct ResultModel: Decodable {
-    var photos:PhotoResultModel?
+    var photos: PhotoResultModel?
 }
 
-struct PhotoResultModel:Decodable {
+struct PhotoResultModel: Decodable {
     var page: Int?
     var pages: Int?
     var perpage: Int?
@@ -20,7 +20,7 @@ struct PhotoResultModel:Decodable {
     var photo: [PhotoInfoModel]?
 }
 
-struct PhotoInfoModel:Decodable {
+struct PhotoInfoModel: Decodable {
     var id: String?
     var owner: String?
     var secret: String?

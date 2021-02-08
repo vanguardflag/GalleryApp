@@ -8,8 +8,8 @@
 import Foundation
 
 protocol PhotosServiceProtocol {
-    func searchPhoto(name:String,page:Int,then handler: @escaping (Result<ResultModel, Error>) -> Void)
-    func getPhotoURL(photoIDs:[String],then handler: @escaping (Result<[PhotoURLResultModel], Error>) -> Void)
+    func searchPhoto(name: String, page: Int,then handler: @escaping (Result<ResultModel, Error>) -> Void)
+    func getPhotoURL(photoIDs: [String], then handler: @escaping (Result<[PhotoURLResultModel], Error>) -> Void)
 }
 
 class PhotosService {
@@ -24,7 +24,7 @@ class PhotosService {
     
 
     // MARK: - Private BuildURL
-    private func buildURL(endPoint:EndPoint)->URL?{
+    private func buildURL(endPoint: EndPoint)->URL?{
         switch endPoint {
         case .getSize(let photoID):
             return buildURL(photoID: photoID)
@@ -41,7 +41,7 @@ class PhotosService {
         urlComponents.path = APIConstant.path
         
         let methodQueryItem = URLQueryItem(name: APIConstant.methodKey,
-                                           value: "\(method.searchPhoto.rawValue)")
+                                           value: "\(Method.searchPhoto.rawValue)")
         var queryItems: [URLQueryItem] = [methodQueryItem]
         queryItems.append(URLQueryItem(name: APIConstant.apiKey,
                                        value: APIConstant.appAPIKey))
@@ -53,13 +53,13 @@ class PhotosService {
         return urlComponents.url
     }
     
-    private func buildURL(photoID:String) -> URL? {
+    private func buildURL(photoID: String) -> URL? {
         var urlComponents = URLComponents()
         urlComponents.scheme = APIConstant.scheme
         urlComponents.host = APIConstant.host
         urlComponents.path = APIConstant.path
         let methodQueryItem = URLQueryItem(name: APIConstant.methodKey,
-                                           value: "\(method.getSize.rawValue)")
+                                           value: "\(Method.getSize.rawValue)")
         var queryItems: [URLQueryItem] = [methodQueryItem]
         queryItems.append(URLQueryItem(name: APIConstant.apiKey,
                                        value: APIConstant.appAPIKey))
@@ -74,7 +74,7 @@ class PhotosService {
 
 extension PhotosService: PhotosServiceProtocol {
     func searchPhoto(name: String, page: Int,then handler: @escaping (Result<ResultModel, Error>) -> Void) {
-        guard let url = buildURL(endPoint:.search(page: page, search: name)) else {
+        guard let url = buildURL(endPoint: .search(page: page, search: name)) else {
             handler(.failure(AppError.requestError))
             return
         }
@@ -99,7 +99,7 @@ extension PhotosService: PhotosServiceProtocol {
         task.resume()
     }
     
-    func getPhotoURL(photoIDs: [String],then handler: @escaping (Result<[PhotoURLResultModel], Error>) -> Void) {
+    func getPhotoURL(photoIDs: [String], then handler: @escaping (Result<[PhotoURLResultModel], Error>) -> Void) {
         let group = DispatchGroup()
         for photoID in photoIDs{
             group.enter()

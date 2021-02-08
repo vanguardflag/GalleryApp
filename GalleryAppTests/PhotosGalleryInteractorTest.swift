@@ -75,9 +75,6 @@ class PhotosGalleryInteractorTest: XCTestCase {
         
     }
     
-    
-    
-    
     func testCanNotFetchData(){
         let sutData: ResultModel = bundle.decodeFile(name: "photolistlastpage")!
         fakePhotoService.configure(result: .success(sutData))

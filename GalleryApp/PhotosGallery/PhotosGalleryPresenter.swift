@@ -29,8 +29,8 @@ public final class PhotosGalleryPresenter: PhotosGalleryPresentationLogic {
         }
     }
 
-    private func transformation(result:[PhotoURLResultModel]) -> [PhotoViewModel]{
-        var photos:[PhotoViewModel] = []
+    private func transformation(result: [PhotoURLResultModel]) -> [PhotoViewModel]{
+        var photos: [PhotoViewModel] = []
         result.forEach { photo in
             if let size = photo.size {
                 let detailPhoto = size.first(where: {

@@ -10,9 +10,6 @@ import Foundation
 
 
 enum FetchPhoto {
-    public struct Request {
-       
-    }
 
     public struct Response {
         var result: Result<[PhotoURLResultModel], ErrorType>

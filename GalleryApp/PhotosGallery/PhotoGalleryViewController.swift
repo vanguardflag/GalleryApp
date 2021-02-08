@@ -19,7 +19,7 @@ class PhotoGalleryViewController: UIViewController {
     private let itemsPerRow: CGFloat = 2
     private var contentView = PhotoGalleryView(frame: UIScreen.main.bounds)
     private let searchbarView = UISearchBar()
-    private var isLoading:Bool = false
+    private var isLoading: Bool = false
     private let distanceUntileEndForLoadingMore: CGFloat = 200
     private let photoGalleryDataSource: PhotoGalleryDataSource = PhotoGalleryDataSource()
     
@@ -77,7 +77,7 @@ class PhotoGalleryViewController: UIViewController {
         }
     }
     
-    private func handleViewWithOutData(isError:Bool) {
+    private func handleViewWithOutData(isError: Bool) {
         DispatchQueue.main.async {
             self.contentView.configureView(hasData: false, isError: isError)
         }
@@ -144,7 +144,7 @@ extension PhotoGalleryViewController: UIScrollViewDelegate {
 }
 
 //MARK: - Display Logic
-extension PhotoGalleryViewController:PhotoGalleryDisplayLogic{
+extension PhotoGalleryViewController: PhotoGalleryDisplayLogic{
     
     func displayPhotos(result: FetchPhoto.PresentResult) {
         switch result {
@@ -160,7 +160,7 @@ extension PhotoGalleryViewController:PhotoGalleryDisplayLogic{
 }
 
 // MARK: - Searchbar Delegation
-extension PhotoGalleryViewController:UISearchBarDelegate{
+extension PhotoGalleryViewController: UISearchBarDelegate{
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let text = searchBar.text else {
             return

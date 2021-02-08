@@ -8,10 +8,10 @@
 import Foundation
 
 struct PhotoURLResult: Decodable {
-    var sizes:PhotoURLResultModel?
+    var sizes: PhotoURLResultModel?
 }
 
-struct PhotoURLResultModel:Decodable {
+struct PhotoURLResultModel: Decodable {
     var canblog: Int?
     var canprint: Int?
     var candownload: Int?
@@ -19,7 +19,7 @@ struct PhotoURLResultModel:Decodable {
 }
 
 
-struct PhotosURLModel:Decodable {
+struct PhotosURLModel: Decodable {
     var label: String?
     var width: Int?
     var height: Int?
