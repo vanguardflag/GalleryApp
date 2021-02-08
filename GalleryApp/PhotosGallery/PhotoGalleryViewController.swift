@@ -21,13 +21,15 @@ class PhotoGalleryViewController: UIViewController {
     private let searchbarView = UISearchBar()
     private var isLoading: Bool = false
     private let distanceUntileEndForLoadingMore: CGFloat = 200
+    private let navigateToPhototPreview: NavigateToPhotoPreviewProtocol?
     private let photoGalleryDataSource: PhotoGalleryDataSource = PhotoGalleryDataSource()
     
     //MARK: - Initial ViewCOntroller
     init(
-        interactor: PhotoGalleryBussinesLogic
+        interactor: PhotoGalleryBussinesLogic, navigateToPhototPreview: NavigateToPhotoPreviewProtocol?
     ) {
         self.interactor = interactor
+        self.navigateToPhototPreview = navigateToPhototPreview
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -92,8 +94,8 @@ extension PhotoGalleryViewController: UICollectionViewDelegateFlowLayout {
             showAlert()
             return
         }
-        let vc = PhotoPreviewerViewController(imageURL: url)
-        self.present(vc, animated: true, completion: nil)
+        navigateToPhototPreview?.present(imageURL: url,
+                                         viewController: self)
     }
     
     func collectionView(
