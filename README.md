@@ -12,5 +12,5 @@ This project aims to consume data from [flickr](https://www.flickr.com/services/
 | PhotosService       | call the flickr.photos.search for getting the photo list base on tag search             | 
 | PhotoPreviewerViewController |  for previewing the image in large size |
 
-
+# Author
 Jalal Najafi - najafi.jalal.cse@gmail.com
